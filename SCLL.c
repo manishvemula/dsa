@@ -15,7 +15,9 @@ void add_last(int data);
 int count_nodes();
 void delete_first();
 void delete_last();
-void reverse();
+void reverse(); 
+node *find_mid();
+void fun_mid();  
 
 int main(){
     add_first(10);
@@ -25,13 +27,19 @@ int main(){
     add_last(40);
     add_last(50);
     display(); //head->30->20->10->40->50
+    fun_mid(); //mid=10
     printf("%d is number of nodes\n",count_nodes());
     delete_first();
+    
     display(); //head->20->10->40->50
+    fun_mid(); //mid=10
     delete_last();
+    
     display(); //head->20->10->40
+    fun_mid(); //mid=10
     reverse();
-    display(); //head->40->10->20
+    display(); //head->40->10->20**/
+   
     return 0;
 }
 
@@ -159,12 +167,32 @@ void delete_last(){
 void reverse(){
     node *n1=head;
     node *n2=head->next;
-    while(n2!=head){
+    while(n2->next!=head){
         node *n3=n2->next;
         n2->next=n1;
         n1=n2;
         n2=n3;
     }
-    head->next=head;
-    head=n1;
+    n2->next=n1;
+    head->next=n2;
+    head=n2;
+}
+
+
+node *find_mid(){
+    node *slow=head;
+    node *fast=head;
+    do{
+        slow=slow->next;
+        fast=fast->next->next;
+        if(fast==head) //even
+            break;
+    }while(fast->next!=head); //odd
+    return slow;
+}
+
+void fun_mid(){   
+    node *mid=find_mid();
+    int mid_value=mid->data;
+    printf("mid=%d \n",mid_value);
 }

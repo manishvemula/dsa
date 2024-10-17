@@ -18,6 +18,7 @@ void delete_first();
 void delete_last();
 void delete_at_specific_pos(int pos);
 void reverse();
+struct node* linear_search(int key);
 
 int main(){
     add_first(10);
@@ -38,6 +39,14 @@ int main(){
     display(); //head->20->60->40
     reverse();
     display(); //head->40->60->20
+    struct node* res;
+    res=linear_search(60);
+    if(res==NULL){
+        printf("not found key\n");
+    }
+    else{
+        printf("key found\n");
+    }
     return 0;
 }
 
@@ -222,4 +231,15 @@ void reverse(){
     }
     head->next=NULL;
     head=n1;
+}
+
+struct node* linear_search(int key){
+    struct node* trav=head;
+    while(trav!=NULL){
+        if(trav->data==key){
+            return trav;
+        }
+        trav=trav->next;
+    }
+    return NULL;
 }
