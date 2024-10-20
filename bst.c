@@ -30,8 +30,8 @@ int main(){
     bst_preorder(root);
     printf("\n bst inorder: \n");
     bst_inorder(root);
-    /**printf("\n bst postorder: \n");
-    bst_postorder(root);**/
+    printf("\n bst postorder: \n");
+    bst_postorder(root);
     printf("\n bfs traversal: \n");
     bfs_traversal(root);
     node *result=bfs_search_key(80);
@@ -59,6 +59,7 @@ node* create_node(){
     nn->data=0;
     nn->left=NULL;
     nn->right=NULL;
+    nn->visited=0;
 }
 
 void add_node(int data){
@@ -91,7 +92,6 @@ void add_node(int data){
             }
         }
     }
-        
 }
 
 void rec_inorder(node *trav){
@@ -160,34 +160,31 @@ void bst_inorder(){
     }
 }
 
-/**void bst_postorder(){
+void bst_postorder(){
     stack s;
     stack_init(&s);
     node *trav=root;
-    node *temp=root;
-    while(trav!=NULL || temp!=NULL || !stack_empty(&s)){
+    while(trav!=NULL || !stack_empty(&s)){
         while(trav!=NULL){
             push(&s,trav);
             trav=trav->left;
         }
-        while(temp!=NULL){
-            push(&s,temp);
-            temp=temp->right;
-        }
-        
         if(!stack_empty(&s)){
             trav=peek(&s);
             pop(&s);
-            temp=peek(&s);
-            pop(&s);
         }
-        /**if(!stack_empty(&s)){
-            temp=peek(&s);
-            pop(&s);
+        if(trav->right==NULL || trav->right->visited==1){
+            printf("%-4d",trav->data);
+            trav->visited=1;
+            trav=NULL;
         }
-        printf("%4d",trav->data);
+        else{
+            push(&s,trav);
+            trav=trav->right;
+        }
+        
     }
-}***/
+}
 
 void bfs_traversal(){
     queue q;

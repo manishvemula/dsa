@@ -5,6 +5,7 @@ typedef struct node{
     struct node* left;
     int data;
     struct node *right;
+    int visited;
 }node;
 
 node* create_node();
